@@ -1,0 +1,19 @@
+.employeeList {
+    margin-left: 1%;
+    margin-top: 3%;
+    background-color: #FFFFFF;
+}
+
+.employeeListTitle {
+    padding: 1%;
+    margin-bottom: 0.5%;
+    margin-right: 1%;
+    box-shadow: 0px 2px 5px 0px;
+    background-color: #FFFFFF;
+}
+
+.addEmployee {
+    margin-bottom: 0.5%;
+    background: blue;
+    box-shadow: 0px 2px 5px 0px blue;
+}
