@@ -50,7 +50,6 @@ class Employee extends Component {
             <tr>
                 <td>{employeeObject.address}</td>
                 <td>{employeeObject.salary}</td>
-                {/* <td>{employeeObject.balance}</td> */}
                 <td><Button variant="primary" onClick={this.toggleEditModal}>Edit</Button></td>
             </tr>
         )

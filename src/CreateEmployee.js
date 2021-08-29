@@ -40,19 +40,19 @@ class CreateEmployee extends Component {
         <Container>
             <Modal show={true} onHide={this.props.closeCreateModal}>
             <Modal.Header closeButton onClick={this.props.closeCreateModal}>
-                <Modal.Title>Add New Employee</Modal.Title>
+                <Modal.Title>Add New Stream</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
                 <Container>
                 <Form>
                     <Form.Group className="mb-3">
-                        <Form.Label htmlFor="employee_address">Employee Address </Form.Label>
+                        <Form.Label htmlFor="employee_address">Recipient Address </Form.Label>
                         <Form.Control type="text" name="employee_address" value={this.state.employeeAddress} onChange={this.handleChange}></Form.Control>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label htmlFor="employee_salary">Employee Salary</Form.Label>
+                        <Form.Label htmlFor="employee_salary">Amount/Month</Form.Label>
                         <Form.Control type="text" name="employee_salary" value={this.state.employeeSalary} onChange={this.handleChange}></Form.Control>
                     </Form.Group>
                 </Form>
@@ -60,7 +60,7 @@ class CreateEmployee extends Component {
             </Modal.Body>
 
             <Modal.Footer>
-                {this.state.created? <Button variant="primary" onClick={this.handleSubmit}>Create Employee</Button>
+                {this.state.created? <Button variant="primary" onClick={this.handleSubmit}>Create Stream</Button>
                 :<Spinner animation="border" variant="primary"></Spinner>}
               <Button variant="secondary" onClick={this.props.closeCreateModal}>
                 Close

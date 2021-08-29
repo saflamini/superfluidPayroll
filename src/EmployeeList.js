@@ -3,11 +3,9 @@ import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
 import "./EmployeeList.css";
 import Table from "react-bootstrap/Table";
 import Employee from "./Employee";
-import { calculateSalary } from "./config";
 
 class EmployeeList extends Component {
     constructor(props) {
@@ -35,9 +33,6 @@ class EmployeeList extends Component {
             ))
         )
     }
-                
-            
-
 
     render() {
         return (
@@ -47,18 +42,17 @@ class EmployeeList extends Component {
                     <Row>
                
                         <Card className="employeeListTitle">
-                            <h3>Employee Roster</h3>
+                            <h3>Active Streams</h3>
                         </Card>
                         <Button className="addEmployee" onClick={this.toggleCreateModal}>
-                            Add Employee
+                            Add Stream
                         </Button>
                         
                         <Table className="employees"responsive bordered hover>
                         <thead>
                             <tr>
                             <th>Address</th>
-                            <th>Salary</th>
-                            {/* <th>Balance</th> */}
+                            <th>Amount/Month</th>
                             <th>Edit</th>
                             </tr>
                         </thead>

@@ -50,7 +50,6 @@ class Master extends Component {
         this.connected = this.connected.bind(this);
         this.isConnected = this.isConnected.bind(this);
         this.getBalances = this.getBalances.bind(this);
-
         this.addFunding = this.addFunding.bind(this);
         this.withdrawFunding = this.withdrawFunding.bind(this);
         this.createStream = this.createStream.bind(this);
@@ -61,8 +60,7 @@ class Master extends Component {
         this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
         this.showEditModal = this.showEditModal.bind(this);
         this.listOutFlows = this.listOutFlows.bind(this);
-        this.netFlow = this.netFlow.bind(this);
-        //explain these
+        this.getNetFlow = this.getNetFlow.bind(this);
         this.editStream = this.editStream.bind(this);
         this.deleteStream = this.deleteStream.bind(this);
         this.getTotalOutflows = this.getTotalOutflows.bind(this);
@@ -102,7 +100,7 @@ class Master extends Component {
         await this.getBalances();
         await this.listOutFlows();
         await this.getTotalOutflows();
-        await this.netFlow();
+        await this.getNetFlow();
         await this.getEndDate();
         }
     
@@ -189,11 +187,6 @@ class Master extends Component {
         this.setState({
             fUSDCxBal: adjustedfUSDCx
         })
-        
-        const netFlow = await this.state.sf.cfa.getNetFlow({
-            superToken: fUSDCx_address,
-            account: this.state.account
-        })
 
     }
 
@@ -214,7 +207,7 @@ class Master extends Component {
         })
     }
 
-    async netFlow() {
+    async getNetFlow() {
         const netFlow = await this.state.sf.cfa.getNetFlow({
             superToken: fUSDCx_address,
             account: this.state.account
@@ -365,7 +358,6 @@ class Master extends Component {
         let outFlows = this.state.outFlows;
         for (let i = 0; i <= outFlows.length; i++) {
             if (outFlows[i].receiver === employeeAddress) {
-                console.log('true boi')
                 salary = calculateSalary(this.state.outFlows[i].flowRate);
                 break;
             }
@@ -401,7 +393,7 @@ class Master extends Component {
             <Container>
                 <Row>
                 <Col>
-                <h3 className="title">Superfluid Payroll Dashboard</h3>
+                <h3 className="title">Superfluid Dashboard</h3>
                 </Col>
                 <Col>
                 {!this.state.connected || this.state.account == "" || this.state.account == undefined?
