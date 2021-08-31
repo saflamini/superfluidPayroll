@@ -6,12 +6,12 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from "react-bootstrap/Modal";
 import Spinner from 'react-bootstrap/Spinner';
 
-class CreateEmployee extends Component {
+class CreateStream extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            employee_address: "",
-            employee_salary: "",
+            address: "",
+            amount: "",
             created: true
         }
 
@@ -31,7 +31,7 @@ class CreateEmployee extends Component {
         setTimeout(() => {
             this.props.createStream(this.state)
             .then(console.log())
-            .then(this.setState({employeeAddress: "", employeeSalary: "", created: true}))
+            .then(this.setState({address: "", amount: "", created: true}))
         }, 2000);
     }
 
@@ -47,13 +47,13 @@ class CreateEmployee extends Component {
                 <Container>
                 <Form>
                     <Form.Group className="mb-3">
-                        <Form.Label htmlFor="employee_address">Recipient Address </Form.Label>
-                        <Form.Control type="text" name="employee_address" value={this.state.employeeAddress} onChange={this.handleChange}></Form.Control>
+                        <Form.Label htmlFor="address">Recipient Address </Form.Label>
+                        <Form.Control type="text" name="address" value={this.state.address} onChange={this.handleChange}></Form.Control>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                        <Form.Label htmlFor="employee_salary">Amount/Month</Form.Label>
-                        <Form.Control type="text" name="employee_salary" value={this.state.employeeSalary} onChange={this.handleChange}></Form.Control>
+                        <Form.Label htmlFor="amount">Amount/Month</Form.Label>
+                        <Form.Control type="text" name="amount" value={this.state.amount} onChange={this.handleChange}></Form.Control>
                     </Form.Group>
                 </Form>
                 </Container>
@@ -73,4 +73,4 @@ class CreateEmployee extends Component {
     }
 }
 
-export default CreateEmployee;
+export default CreateStream;

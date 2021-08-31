@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import Web3 from "web3";
-import SuperfluidSDK, { completeTransaction } from "@superfluid-finance/js-sdk";
+import SuperfluidSDK from "@superfluid-finance/js-sdk";
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ERC20abi } from "./abis/ERC20abi";
 import { fUSDCxabi } from "./abis/fUSDCxabi";
-import { calculateSalary, CFAv1_address } from "./config";
+import { calculateStream } from "./config";
 import { fUSDC_address } from "./config"
 import { fUSDCx_address } from "./config";
 import ConnectWallet from "./ConnectWallet";
@@ -16,7 +16,7 @@ import Balances from "./Balances";
 import "./Master.css"
 import BigNumber from "bignumber.js";
 import { calculateFlowRate } from "./config";
-import EmployeeList from "./EmployeeList";
+import StreamList from "./StreamList";
 import CreateEmployee from "./CreateEmployee";
 import { toDecimal } from "web3-utils";
 import EditEmployee from "./EditEmployee";
@@ -47,7 +47,7 @@ class Master extends Component {
 
         this.initWeb3= this.initWeb3.bind(this);
         this.getAccount = this.getAccount.bind(this)
-        this.connected = this.connected.bind(this);
+        // this.connected = this.connected.bind(this);
         this.isConnected = this.isConnected.bind(this);
         this.getBalances = this.getBalances.bind(this);
         this.addFunding = this.addFunding.bind(this);
@@ -79,7 +79,7 @@ class Master extends Component {
         web3: new Web3(provider)
         });
 
-        if (this.state.account.length > 0) {
+        
         await sf.initialize()
 
         const fUSDC = new web3.eth.Contract(ERC20abi, fUSDC_address);
@@ -97,6 +97,7 @@ class Master extends Component {
         //call this.getAccounts once we load contracts and set them to state
         
         await this.getAccount();
+        if (this.state.account.length > 0) {
         await this.getBalances();
         await this.listOutFlows();
         await this.getTotalOutflows();
@@ -110,16 +111,20 @@ class Master extends Component {
       }
     }
 
-    isConnected() {
+    async isConnected() {
         let accts = window.ethereum._state.accounts;
     
         if (accts.length === 0) {
             console.log('not connected')
-            this.setState({connected: false})
+            this.setState({
+                connected: false
+            })
         } else {
             console.log('connected')
-            this.setState({account: accts[0]})
-            this.setState({connected: true})
+            this.setState({
+                account: accts[0],
+                connected: true
+            })
             this.initWeb3();
         }
     }
@@ -167,16 +172,6 @@ class Master extends Component {
 
     }
 
-    
-    async connected(acct) {
-        console.log(acct)
-        this.setState({
-            account: acct[0],
-            connected: true,
-        })
-        await this.getAccount();
-        await this.initWeb3();
-    }
 
     async getBalances() {
         
@@ -223,8 +218,8 @@ class Master extends Component {
         let outFlows = this.state.outFlows;
         for (let i = 0; i <= outFlows.length; i++) {
             if (outFlows[i] !== undefined) { 
-                let sal = calculateSalary(outFlows[i].flowRate)
-                totalOutflows = totalOutflows - Number(sal);
+                let stream = calculateStream(outFlows[i].flowRate)
+                totalOutflows = totalOutflows - Number(stream);
             }
         }
         
@@ -353,19 +348,19 @@ class Master extends Component {
     }
 
     showEditModal(employeeAddress) {
-        let salary;
+        let stream;
         
         let outFlows = this.state.outFlows;
         for (let i = 0; i <= outFlows.length; i++) {
             if (outFlows[i].receiver === employeeAddress) {
-                salary = calculateSalary(this.state.outFlows[i].flowRate);
+                let stream = calculateStream(this.state.outFlows[i].flowRate);
                 break;
             }
         }
         return (
             <EditEmployee
             address={employeeAddress}
-            salary={salary}
+            stream={stream}
             toggleEditModal={this.toggleEditModal}
             toggleDeleteModal={this.toggleDeleteModal}
             editStream={this.editStream}
@@ -398,7 +393,8 @@ class Master extends Component {
                 <Col>
                 {!this.state.connected || this.state.account == "" || this.state.account == undefined?
                 <ConnectWallet
-                connected={this.connected}/>
+                getAccount={this.getAccount}
+                />
                 :
                 <Card className="connectWallet">{`${this.state.account.toString().substring(0, 4)}...${this.state.account.toString().substring(38)}`}</Card>
                 }
@@ -426,11 +422,11 @@ class Master extends Component {
 
             <Container>
             
-                <EmployeeList 
+                <StreamList 
                 toggleCreateModal={this.toggleCreateModal}
                 toggleEditModal={this.toggleEditModal}
                 toggleDeleteModal={this.toggleDeleteModal}
-                flows={this.state.outFlows}
+                streams={this.state.outFlows}
                 fUSDCx={this.state.fUSDCx}
                 />
             

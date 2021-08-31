@@ -8,24 +8,41 @@ class ConnectWallet extends Component {
         this.enableWallet = this.enableWallet.bind(this)
     }
 
+    // async enableWallet() {
+    //     window.ethereum.request({ 
+    //         method: 'eth_requestAccounts' 
+    //     })
+    //     .then
+    //     (window.ethereum.request({ 
+    //         method: 'eth_accounts'
+    //     }))
+       
+    //     const acct = await window.ethereum.request({ method: 'eth_accounts' });
+    //     this.props.connected(acct)
+
+    // }
+
     async enableWallet() {
         window.ethereum.request({ 
             method: 'eth_requestAccounts' 
         })
-        .then
-        (window.ethereum.request({ 
-            method: 'eth_accounts'
-        }))
+        // .then
+        // (window.ethereum.request({ 
+        //     method: 'eth_accounts'
+        // }))
        
-        const acct = await window.ethereum.request({ method: 'eth_accounts' });
-        this.props.connected(acct)
+        // const acct = await window.ethereum.request({ method: 'eth_accounts' });
+
+        await this.props.getAccount()
 
     }
 
     render() {
             return (
+                // <Button onClick={this.enableWallet} className="connectWallet">Connect Wallet</Button>
                 <Button onClick={this.enableWallet} className="connectWallet">Connect Wallet</Button>
-            )
+
+                )
         }
     }
 

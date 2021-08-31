@@ -1,8 +1,6 @@
 // import web3 from "web3";
 
-// import SuperfluidSDK from "@superfluid-finance/js-sdk";
-// import TruffleContract from "@truffle/contract"; 
-// import detectEthereumProvider from '@metamask/detect-provider';
+
 import BigNumber from "bignumber.js";
 
 
@@ -16,9 +14,9 @@ export function calculateFlowRate(salary) {
     return Math.floor(fr);
 }
 
-export function calculateSalary(flowRate) {
-    const sal = new BigNumber(flowRate * (86400 * 30)).shiftedBy(-18);
-    return sal.toFixed(2);
+export function calculateStream(flowRate) {
+    const stream = new BigNumber(flowRate * (86400 * 30)).shiftedBy(-18);
+    return stream.toFixed(2);
 }
 
 //hard coded to monthly
